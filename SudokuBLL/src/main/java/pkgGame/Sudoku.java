@@ -13,6 +13,7 @@ import java.util.Random;
 import pkgEnum.ePuzzleViolation;
 import pkgHelper.LatinSquare;
 import pkgHelper.PuzzleViolation;
+import pkgEnum.eGameDifficulty;
  
 
 /**
@@ -581,7 +582,7 @@ public class Sudoku extends LatinSquare implements Serializable {
 	 * @author Bert.Gibbons
 	 *
 	 */
-	private class SudokuCell extends Cell {
+	public class SudokuCell extends Cell {
 
 		private int iRow;
 		private int iCol;
@@ -659,4 +660,74 @@ public class Sudoku extends LatinSquare implements Serializable {
 
 		}
 	}
+	private boolean IsDifficultyMet(int iPossibleValues) {
+		int myValues=this.eGameDifficulty.get(iPossibleValues);
+		int DIFF= this.eGameDifficulty.iDifficulty;
+		
+		
+		if (myValues == 0) 
+			return false;
+		
+		else if (myValues >= DIFF) {
+			return true;
+		
+			}
+		else {
+			return false;
+		}
+
+	}
+	
+	private void RemoveCells() throws Exception {
+		
+	do{
+		
+		Random randNumGenerator = new Random();
+		int randNum1 = randNumGenerator.nextInt(this.iSize) ;
+		int randNum2 = randNumGenerator.nextInt(this.iSize);
+		this.getPuzzle()[randNum1][randNum2] = 0;
+		
+		
+	}while (IsDifficultyMet(PossibleValuesMultiplier(this.cells)) == false);
+}
+	
+	private static int PossibleValuesMultiplier(HashMap<Integer, Sudoku.SudokuCell> cells) throws Exception {
+
+        Sudoku s = new Sudoku(9);
+
+        fillRemaining(LstRemainingValidValues);
+
+        cells.put(Math.random()*this.iSize*this.iSize, 0);
+
+       
+
+        int multiplier = 1;
+
+
+
+        for (int key : cells.keySet()) {
+
+                      try {
+
+                                    if (cells.get(key).getLstRemainingValidValues().size() == 0)
+
+                                                 multiplier *= 1;
+
+                                    else
+
+                                                 multiplier *= cells.get(key).getLstRemainingValidValues().size();
+
+                      } catch (Exception e) {
+
+                                    multiplier = Integer.MAX_VALUE;
+
+                                    break;
+
+                      }
+
+        }           
+
+}
+	
+}
 }

@@ -1,6 +1,5 @@
 package pkgEnum;
 
-import java.util.ArrayList;
 
 public enum eGameDifficulty{
 	EASY(10), MEDIUM(30), HARD(50);
@@ -35,73 +34,18 @@ public enum eGameDifficulty{
 		}
 		return myEnum;
 	}
-	private boolean IsDifficultyMet(int iPossibleValues) {
-		int myValues=this.eGameDifficulty.get(iPossibleValues);
-		int DIFF= this.eGameDifficulty.iDifficulty;
+	public static eGameDifficulty valueOf(java.lang.name) {
 		
-		
-		if (myValues == 0) 
-			return false;
-		
-		else if (myValues >= DIFF) {
-			return true;
-		
-			}
-		else {
-			return false;
-		}
-
+		if (iDifficulty >= 100 && iDifficulty < 500) {
+			return eGameDifficulty.valueOf("EASY");
 	}
-	
-	private void RemoveCells() throws Exception {
-		
-	do{
-		
-		Random randNumGenerator = new Random();
-		int randNum1 = randNumGenerator.nextInt(this.iSize) ;
-		int randNum2 = randNumGenerator.nextInt(this.iSize);
-		this.getPuzzle()[randNum1][randNum2] = 0;
-		
-		
-	}while (IsDifficultyMet(PossibleValuesMultiplier(this.cells)) == false);
-}
-	
-	private static int PossibleValuesMultiplier(HashMap<Integer, Sudoku.SudokuCell> cells) throws Exception {
-
-        Sudoku s = new Sudoku(9);
-
-        fillRemaining(LstRemainingValidValues);
-
-        cells.put(Math.random()*this.iSize*this.iSize, 0);
-
-       
-
-        int multiplier = 1;
-
-
-
-        for (int key : cells.keySet()) {
-
-                      try {
-
-                                    if (cells.get(key).getLstRemainingValidValues().size() == 0)
-
-                                                 multiplier *= 1;
-
-                                    else
-
-                                                 multiplier *= cells.get(key).getLstRemainingValidValues().size();
-
-                      } catch (Exception e) {
-
-                                    multiplier = Integer.MAX_VALUE;
-
-                                    break;
-
-                      }
-
-        }           
-
-}
-	
+		else if(iDifficulty >= 500 && iDifficulty < 1000) {
+			return eGameDifficulty.valueOf("MEDIUM");
+		}
+		else if (iDifficulty >= 1000) {
+			return eGameDifficulty.valueOf("HARD");
+		}
+		else 
+			return null;
+	}
 }
